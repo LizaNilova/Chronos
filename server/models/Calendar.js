@@ -16,7 +16,7 @@ const CalendarSchema = new mongoose.Schema(
       required: true, 
       default: "additionally" 
     },
-    color_event: { 
+    color: { 
       type: String, 
       required: true, 
       default: "fffff" 
