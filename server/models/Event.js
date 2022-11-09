@@ -27,6 +27,11 @@ const EventSchema = new mongoose.Schema({
     required: true, 
     default: "task" 
   },
+  completed {
+    type: Boolean,
+    required: true,
+    default: false
+  },
 });
 export default mongoose.model("Event", EventSchema);
 
