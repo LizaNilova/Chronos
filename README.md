@@ -12,5 +12,5 @@ SERVICE = Gmail\
 EMAIL_PORT = 3002\
 SECURE = true\
 USER = nikaostroverh@gmail.com\
-PASS = mwaixzeazdrhcgjf\
+PASS = mwaixzeazdrhcgjf
 
