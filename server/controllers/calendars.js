@@ -102,7 +102,12 @@ export class CalendarController {
   }
   async getCalendarById(req, res) {
     try {
+      const user = await User.findById(req.user.id);
       const calendar = await Calendar.findById({ _id: req.params.id });
+      const new_user = await Calendar.findOne({ members: { _id: user._id } });
+      if (!new_user) {
+        calendar.members.push(user);
+      }
       res.json(calendar);
     } catch (error) {
       console.log(error);

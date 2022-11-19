@@ -31,6 +31,12 @@ export class AuthController {
           });
         }
 
+        if (!username.match(/^[a-zA-Z0-9._]*$/)) {
+          return res.json({
+            message: "Username isn't valid",
+          });
+        }
+
         const salt = bcrypt.genSaltSync(10);
         const hash = bcrypt.hashSync(password, salt);
 

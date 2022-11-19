@@ -21,6 +21,24 @@ export class UserController {
   }
   async inviteFriends(req, res) {
     try {
+      const { email, id_calendar } = req.body;
+
+      const new_member = await User.findOne({ email: email });
+      if (!new_member)
+        return res.json({ success: false, message: "Sorry, user not found!" });
+
+      // verification email
+      const url = `${process.env.BASE_URL}calendars/${id_calendar}`;
+      mailTransport().sendMail({
+        from: process.env.USER,
+        to: email,
+        subject: `Tou have been invited to the calendar by ${req.user.username}. To grant access, follow the link or ignore this message.`,
+        html: `<h1>${url}</h1>`,
+      });
+      ////////////////////////////////////////
+      res.json({
+        message: "An Email was sent to your friend",
+      });
     } catch (error) {
       res.json({ message: "Inviting error" });
     }
@@ -52,7 +70,14 @@ export class UserController {
       const user = await User.findById(req.params.id);
 
       user.full_name = full_name;
-      if (username) user.username = username;
+      if (username) {
+        user.username = username;
+        if (!username.match(/^[a-zA-Z0-9._]*$/)) {
+          return res.json({
+            message: "Username isn't valid",
+          });
+        }
+      }
       if (password) {
         const salt = bcrypt.genSaltSync(10);
         const hash = bcrypt.hashSync(password, salt);
