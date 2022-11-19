@@ -61,8 +61,11 @@ export class EventController {
   }
   async deleteEvent(req, res) {
     try {
-      await Event.findByIdAndDelete(req.params.id);
-      res.json({ message: "Event was deleted" });
+      const event = await Event.findById(req.params.id);
+      if (req.user._id.equals(event.author)) {
+        await Event.findByIdAndDelete(req.params.id);
+        res.json({ message: "Event was deleted" });
+      } else return res.json({ message: "No access!" });
     } catch (error) {
       res.json({ message: "Deleting event error" });
     }
@@ -73,16 +76,17 @@ export class EventController {
         req.body;
 
       const event = await Event.findById(req.params.id);
+      if (req.user._id.equals(event.author)) {
+        event.name = name;
+        event.description = description;
+        if (date_start) event.date_start = date_start;
+        if (date_end) event.date_end = date_end;
+        event.type = type;
+        event.completed = completed;
+        await event.save();
 
-      event.name = name;
-      event.description = description;
-      if (date_start) event.date_start = date_start;
-      if (date_end) event.date_end = date_end;
-      event.type = type;
-      event.completed = completed;
-      await event.save();
-
-      res.json(event);
+        res.json(event);
+      } else return res.json({ message: "No access!" });
     } catch (error) {
       res.json({ message: "Updating event error" });
     }

@@ -46,19 +46,21 @@ export class CalendarController {
 
       const calendar = await Calendar.findById(req.params.id);
 
-      calendar.name = name;
-      calendar.description = description;
-      calendar.color = color;
-      // если тип клендаря дополнительный, то можно поменять visible
-      if (calendar.type === "additional") calendar.visible = visible;
-      calendar.national_holidays = national_holidays;
-      if (members.length === 0) {
-        calendar.members = [];
-      } else if (members) calendar.members = members;
+      if (req.user._id.equals(calendar.author)) {
+        calendar.name = name;
+        calendar.description = description;
+        calendar.color = color;
+        // если тип клендаря дополнительный, то можно поменять visible
+        if (calendar.type === "additional") calendar.visible = visible;
+        calendar.national_holidays = national_holidays;
+        if (calendar.members.length === 0) {
+          calendar.members = [];
+        } else if (members) calendar.members = members;
 
-      await calendar.save();
+        await calendar.save();
 
-      res.json(calendar);
+        res.json(calendar);
+      } else return res.json({ message: "No access!" });
     } catch (error) {
       console.log(error);
       return res.json({ message: "Updating calendar error" });
@@ -68,20 +70,24 @@ export class CalendarController {
     try {
       // Удалить можно только доп календари.
       // При удалении календаря, нужно проверять, есть ли у ивента хоть один календарь, если нет, удалить его.
-
-      const calendar = await Calendar.findOneAndDelete({
+      const calendar = await Calendar.findOne({
         type: "additional",
         _id: req.params.id,
       });
-      await Event.updateMany({ $pull: { calendars: req.params.id } });
-      if (!calendar)
-        return res.json({
-          message:
-            "That calendar is not exist or you trying to delete a main calendar!",
+      if (req.user._id.equals(calendar.author)) {
+        const calendar = await Calendar.findOneAndDelete({
+          type: "additional",
+          _id: req.params.id,
         });
-
-      await Event.deleteMany({ calendars: [] });
-      res.json({ message: "Calendar was deleted" });
+        if (!calendar)
+          return res.json({
+            message:
+              "That calendar is not exist or you trying to delete a main calendar!",
+          });
+        await Event.updateMany({ $pull: { calendars: req.params.id } });
+        await Event.deleteMany({ calendars: [] });
+        res.json({ message: "Calendar was deleted" });
+      } else return res.json({ message: "No access!" });
     } catch (error) {
       console.log(error);
       return res.json({ message: "Deleting calendar error" });
