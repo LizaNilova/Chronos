@@ -69,15 +69,11 @@ export class UserController {
         if (!cookies?.jwt) return res.sendStatus(204); //No content
         res.clearCookie("jwt", {
           httpOnly: true,
-          sameSite: "None",
-          secure: true,
         });
         res.clearCookie("accessToken", {
           httpOnly: true,
-          sameSite: "None",
-          secure: false,
         });
-        res.json({ message: "Cookie cleared, user was deleted" });
+        res.json({ message: "Cookie were cleared, user was deleted" });
       } else return res.json({ message: "No access!" });
     } catch (error) {
       console.log(error);
