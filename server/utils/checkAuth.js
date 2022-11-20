@@ -3,7 +3,6 @@ import User from "../models/User.js";
 import asyncHandler from "express-async-handler";
 
 const refresh = async (req, res, next, cookies) => {
-  console.log("hello");
   if (!cookies?.jwt) return res.status(401).json({ message: "Unauthorized" });
 
   const refreshToken = cookies.jwt;
