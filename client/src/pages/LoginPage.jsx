@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { loginUser } from "../redux/features/auth/authSlice"
 import { toast } from 'react-toastify'
-import './loginPage.css'
+import './styles/loginPage.css'
 
 export const LoginPage = () => {
     const [login, setLogin] = useState('')
@@ -23,12 +23,14 @@ export const LoginPage = () => {
             navigate('/home-page')
         }
         console.log(status)
-    }, [status, navigate])
+        //тост почему-то неработает, разберусь с этим чуть позже
+        toast(status)
+    }, [status, navigate, toast])
 
     const handleSubmit = () => {
         try {
-            console.log(login)
-            console.log(password)
+            // console.log(login)
+            // console.log(password)
             dispatch(loginUser({
                 username_or_email: login,
                 password,
@@ -90,8 +92,8 @@ export const LoginPage = () => {
         <form
             onSubmit={e => e.preventDefault()}
             className="box-border flex justify-center items-center min-h-[100vh] bg-gray-500">
-            <div className="card">
-                <h3 className="uppercase tracking-[2px] text-gray-300 mt-4 text-xl">Sign Up</h3>
+            <div className="loginCard">
+                <h3 className="uppercase tracking-[2px] text-gray-300 mt-4 text-xl">Sign In</h3>
                 <div className="relative w-[250px]">
                     <input
                         type="text"
@@ -107,7 +109,7 @@ export const LoginPage = () => {
                         required="required"
                         value={password}
                         onChange={e => setPassword(e.target.value)} />
-                    <span className="">Password</span>
+                    <span className="password-span">Password</span>
                 </div>
                 <div className="flex flex-col gap-2 items-center justify-center">
                     <Link
@@ -116,7 +118,7 @@ export const LoginPage = () => {
                     >Forgot password?</Link>
                     <button type='submit' onClick={handleSubmit} >Log in</button>
                     <Link
-                        to='/register'
+                        to='/registration'
                         className="flex justify-center items-center text-xs m-5 text-black hover:text-gray-200 hover:transition-[1s]"
                     >Create an account</Link>
                 </div>

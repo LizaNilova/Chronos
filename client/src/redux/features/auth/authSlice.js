@@ -10,13 +10,14 @@ const initialState = {
 
 export const registerUser = createAsyncThunk(
   'auth/registerUser',
-  async ({ login, password, passwordConfirmation, email }) => {
+  async ({ username, full_name, password, email, repeatPassword }) => {
     try {
       const { data } = await axios.post('http://localhost:5000/api/auth/register', {
-        login,
+        username,
+        full_name,
         password,
-        passwordConfirmation,
-        email,
+        repeatPassword,
+        email
       }, { withCredentials: true })
       return data
     } catch (error) {
@@ -24,6 +25,18 @@ export const registerUser = createAsyncThunk(
     }
   },
 )
+
+// export const verifyEmail = createAsyncThunk(
+//   'auth/verifyEmail',
+//   async(req) => {
+//     try {
+//       const {data} = await axios.get(`http://localhost:5000/api/users/verify/${req.params.token}`)
+//       return data
+//     } catch (error) {
+//       console.log(error)
+//     }
+//   }
+// )
 
 export const loginUser = createAsyncThunk(
   'auth/loginUser',
@@ -123,7 +136,7 @@ export const logout = createAsyncThunk(
       const { data } = await axios.post('http://localhost:5000/api/auth/logout', { withCredentials: true })
       // deleteCookie('accessToken')
       // deleteCookie('jwt')
-      document.cookie = 'accessToken=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT;'
+      console.log(data)
       return data
     }
     catch (error) {
@@ -178,7 +191,7 @@ export const authSlice = createSlice({
     [logout.fulfilled]: (state, action) => {
       state.user = null
       state.isLoading = false
-      state.status = action.payload.message
+      state.status = action.payload?.message
       state.me = null
     },
     [logout.rejected]: (state, action) => {
