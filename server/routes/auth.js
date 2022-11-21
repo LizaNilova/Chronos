@@ -16,7 +16,7 @@ router.post("/login", authController.login);
 
 // Log out +
 // http://localhost:3002/api/auth/logout
-router.post("/logout", authController.logout);
+router.get("/logout", authController.logout);
 
 // Forgot password +
 // http://localhost:3002/api/auth/recover
