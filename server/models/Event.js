@@ -17,6 +17,11 @@ const EventSchema = new mongoose.Schema({
     type: Date,
     required: true,
   },
+  author: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
   calendars: [
     {
       type: mongoose.Schema.Types.ObjectId,
@@ -24,6 +29,10 @@ const EventSchema = new mongoose.Schema({
       required: true,
     },
   ],
+  repeat: {
+    type: String,
+    required: false,
+  },
   type: {
     type: String,
     required: false,

@@ -1,10 +1,3 @@
-import User from "../models/User.js";
-import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
-import mailTransport from "../utils/mailTransport.js";
-import asyncHandler from "express-async-handler";
-import { decode } from "punycode";
-import Calendar from "../models/Calendar.js";
 import Event from "../models/Event.js";
 
 export class EventController {
@@ -18,7 +11,9 @@ export class EventController {
   }
   async getAllEvents(req, res) {
     try {
-      const event = await Event.find({ author: { _id: req.user.id } });
+      const event = await Event.find({ author: { _id: req.user.id } }).sort(
+        "-date_start"
+      );
       res.json(event);
     } catch (error) {
       res.json({ message: "Getting events error" });
@@ -34,6 +29,7 @@ export class EventController {
         calendars,
         type,
         completed,
+        repeat,
       } = req.body;
 
       if (!calendars || !date_start || !date_end)
@@ -50,6 +46,7 @@ export class EventController {
         completed,
         date_start,
         date_end,
+        repeat,
       });
 
       await newEvent.save();
@@ -72,17 +69,25 @@ export class EventController {
   }
   async updateEvent(req, res) {
     try {
-      const { name, description, date_start, date_end, type, completed } =
-        req.body;
+      const {
+        repeat,
+        name,
+        description,
+        date_start,
+        date_end,
+        type,
+        completed,
+      } = req.body;
 
       const event = await Event.findById(req.params.id);
       if (req.user._id.equals(event.author)) {
-        event.name = name;
+        if (name) event.name = name;
         event.description = description;
         if (date_start) event.date_start = date_start;
         if (date_end) event.date_end = date_end;
-        event.type = type;
-        event.completed = completed;
+        if (type) event.type = type;
+        if (completed) event.completed = completed;
+        event.repeat = repeat;
         await event.save();
 
         res.json(event);

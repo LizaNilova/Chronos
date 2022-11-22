@@ -1,12 +1,5 @@
 import User from "../models/User.js";
-import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
-import mailTransport from "../utils/mailTransport.js";
-import asyncHandler from "express-async-handler";
-import { decode } from "punycode";
 import Calendar from "../models/Calendar.js";
-import path, { dirname } from "path";
-import { fileURLToPath } from "url";
 import Event from "../models/Event.js";
 
 export class CalendarController {
@@ -47,12 +40,12 @@ export class CalendarController {
       const calendar = await Calendar.findById(req.params.id);
 
       if (req.user._id.equals(calendar.author)) {
-        calendar.name = name;
+        if (name) calendar.name = name;
         calendar.description = description;
-        calendar.color = color;
+        if (color) calendar.color = color;
         // если тип клендаря дополнительный, то можно поменять visible
         if (calendar.type === "additional") calendar.visible = visible;
-        calendar.national_holidays = national_holidays;
+        if (national_holidays) calendar.national_holidays = national_holidays;
         if (calendar.members.length === 0) {
           calendar.members = [];
         } else if (members) calendar.members = members;
