@@ -3,7 +3,6 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import mailTransport from "../utils/mailTransport.js";
 import asyncHandler from "express-async-handler";
-import { decode } from "punycode";
 
 export class AuthController {
   async register(req, res) {

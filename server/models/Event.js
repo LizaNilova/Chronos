@@ -33,6 +33,10 @@ const EventSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
+  remind: {
+    type: String,
+    required: false,
+  },
   type: {
     type: String,
     required: false,

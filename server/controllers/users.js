@@ -60,7 +60,7 @@ export class UserController {
   async deleteUser(req, res) {
     try {
       const user = await User.findById(req.params.id);
-      console.log(req.user._id, user._id);
+      // console.log(req.user._id, user._id);
       if (req.user._id.equals(user._id)) {
         await User.findByIdAndDelete(req.params.id);
         const cookies = req.cookies;

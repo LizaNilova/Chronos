@@ -9,6 +9,7 @@ import authRoute from "./routes/auth.js";
 import calendarRoute from "./routes/calendar.js";
 import usersRoute from "./routes/members.js";
 import eventRoute from "./routes/event.js";
+import { remainder } from "./utils/remainder.js";
 
 const app = express();
 dotenv.config();
@@ -39,7 +40,7 @@ async function start() {
     await mongoose.connect(
       `mongodb+srv://${DB_USER}:${DB_PASSWORD}@cluster0.ik4rvox.mongodb.net/${DB_NAME}?retryWrites=true&w=majority`
     );
-
+    remainder();
     app.listen(PORT, () => console.log(`Server started on port: ${PORT}`));
   } catch (error) {
     console.log(error);

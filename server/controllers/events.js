@@ -22,6 +22,7 @@ export class EventController {
   async createEvent(req, res) {
     try {
       const {
+        remind,
         name,
         description,
         date_start,
@@ -37,7 +38,9 @@ export class EventController {
 
       // categories = id category
 
+      if (type !== "remainder") remind = "";
       const newEvent = new Event({
+        remind,
         name: name,
         description,
         calendars: calendars,
@@ -70,6 +73,7 @@ export class EventController {
   async updateEvent(req, res) {
     try {
       const {
+        remind,
         repeat,
         name,
         description,
@@ -81,13 +85,14 @@ export class EventController {
 
       const event = await Event.findById(req.params.id);
       if (req.user._id.equals(event.author)) {
+        if (remind) event.remind = remind;
         if (name) event.name = name;
-        event.description = description;
+        if (description) event.description = description;
         if (date_start) event.date_start = date_start;
         if (date_end) event.date_end = date_end;
         if (type) event.type = type;
         if (completed) event.completed = completed;
-        event.repeat = repeat;
+        if (repeat) event.repeat = repeat;
         await event.save();
 
         res.json(event);
