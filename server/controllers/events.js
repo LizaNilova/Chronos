@@ -21,7 +21,7 @@ export class EventController {
   }
   async createEvent(req, res) {
     try {
-      const {
+      let {
         remind,
         name,
         description,
@@ -38,9 +38,9 @@ export class EventController {
 
       // categories = id category
 
-      if (type !== "remainder") remind = "";
+      if (type !== "reminder") remind = "";
       const newEvent = new Event({
-        remind,
+        remind: remind,
         name: name,
         description,
         calendars: calendars,
