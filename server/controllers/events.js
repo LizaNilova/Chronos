@@ -38,7 +38,7 @@ export class EventController {
 
       // categories = id category
 
-      if (type !== "reminder") remind = "";
+      if (type !== "reminder" || type !== "event") remind = "";
       const newEvent = new Event({
         remind: remind,
         name: name,

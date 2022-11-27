@@ -91,6 +91,17 @@ export class AuthController {
         return res.json({ success: false, message: "User not exist" });
       }
 
+      if (!user.verified) {
+        const url = `${process.env.BASE_URL}verify/${v_token}`;
+        mailTransport().sendMail({
+          from: process.env.USER,
+          to: user.email,
+          subject: "Verify your email account",
+          html: `<h1>${url}</h1>`,
+        });
+        return res.json({ message: "An Email sent to your account again" });
+      }
+
       const isPasswordCorrect = await bcrypt.compare(password, user.password);
       if (!isPasswordCorrect) {
         return res.json({ success: false, message: "Uncorrect password" });
@@ -130,17 +141,6 @@ export class AuthController {
         process.env.JWT_SECRET,
         { expiresIn: "10m" }
       );
-
-      if (!user.verified) {
-        const url = `${process.env.BASE_URL}verify/${v_token}`;
-        mailTransport().sendMail({
-          from: process.env.USER,
-          to: user.email,
-          subject: "Verify your email account",
-          html: `<h1>${url}</h1>`,
-        });
-        return res.json({ message: "An Email sent to your account again" });
-      }
       res.json({
         user,
         message: "You are signed in",
