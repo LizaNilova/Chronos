@@ -55,8 +55,12 @@ export class AuthController {
           { expiresIn: "10m" }
         );
 
-        // verification email
         await newUser.save();
+        const user = await User.findOne({ username });
+        console.log(user.id);
+        createMainCalendar(user);
+
+        // verification email
         const url = `${process.env.BASE_URL}verify/${v_token}`;
         mailTransport().sendMail({
           from: process.env.USER,
@@ -92,6 +96,14 @@ export class AuthController {
         return res.json({ success: false, message: "User not exist" });
       }
 
+         const v_token = jwt.sign(
+           {
+             email: user.email,
+           },
+           process.env.JWT_SECRET,
+           { expiresIn: "10m" }
+         );
+
       if (!user.verified) {
         const url = `${process.env.BASE_URL}verify/${v_token}`;
         mailTransport().sendMail({
@@ -102,8 +114,6 @@ export class AuthController {
         });
         return res.json({ message: "An Email sent to your account again" });
       }
-
-      createMainCalendar(user);
       const isPasswordCorrect = await bcrypt.compare(password, user.password);
       if (!isPasswordCorrect) {
         return res.json({ success: false, message: "Uncorrect password" });
@@ -135,14 +145,7 @@ export class AuthController {
         httpOnly: true, //accessible only by web server
         maxAge: 7 * 24 * 60 * 60 * 1000, //cookie expiry: set to match rT
       });
-
-      const v_token = jwt.sign(
-        {
-          email: user.email,
-        },
-        process.env.JWT_SECRET,
-        { expiresIn: "10m" }
-      );
+      
       res.json({
         user,
         message: "You are signed in",
