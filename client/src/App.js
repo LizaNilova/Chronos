@@ -1,22 +1,21 @@
-import { Layout } from "./components/Layout";
-import { Routes, Route } from "react-router-dom"
-import { MainPage } from "./pages/MainPage";
-import { LoginPage } from "./pages/LoginPage";
-import { RegistrationPage } from "./pages/RegistrationPage";
-import { VerifyEmailPage } from "./pages/VerifyEmailPage";
+import useAuth from './utils/useAuth.js'
+import { useRoutes } from "./utils/useRoutes";
 
+import 'react-toastify/dist/ReactToastify.css'
+import { useSelector } from "react-redux";
+import {ToastContainer} from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
 function App() {
+  useAuth();
+  const auth = useSelector((state) => state.auth)
+
+  const routes = useRoutes(Boolean(auth.userId));
   return (
-    // <Layout>
-      <Routes>
-        <Route path='/' element={<LoginPage />} />
-        <Route path='home-page' element={<MainPage/>}/>
-        <Route path='registration' element={<RegistrationPage/>}/>
-        <Route path='verify/:token' element={<VerifyEmailPage/>}/>
-      </Routes>
-    // </Layout>
+    <>
+      {routes}
+      <ToastContainer position='bottom-right'/>
+    </>
   );
 }
 

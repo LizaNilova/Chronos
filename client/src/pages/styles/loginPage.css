@@ -56,6 +56,11 @@
     transform: translateX(133px) translateY(-15px);
 }
 
+.loginCard div input:valid~.email-span,
+.loginCard div input:focus~.email-span{
+    transform: translateX(293px) translateY(-15px);
+}
+
 .loginCard div input:valid, input:focus{
     border: 2px solid #000;
 

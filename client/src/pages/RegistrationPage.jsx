@@ -24,7 +24,7 @@ export const RegistrationPage = () => {
         if (status === 'An Email sent to your account please verify') {
             navigate('/')
         }
-    })
+    }, [status, navigate])
 
     const handleSubmit = () => {
         try {

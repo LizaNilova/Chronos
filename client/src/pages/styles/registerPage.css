@@ -55,7 +55,7 @@
 .registerCard div input:focus~.loginSpan{
     transform: translateX(183px) translateY(-15px);
 }
-.registerCard div input:valid~.Span,
+.registerCard div input:valid~.loginSpan,
 .registerCard div input:focus~.loginSpan{
     transform: translateX(183px) translateY(-15px);
 }

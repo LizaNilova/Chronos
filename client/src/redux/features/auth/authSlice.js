@@ -5,7 +5,7 @@ const initialState = {
   user: null,
   isLoading: false,
   status: null,
-  me: null
+  userId: null
 }
 
 export const registerUser = createAsyncThunk(
@@ -26,18 +26,6 @@ export const registerUser = createAsyncThunk(
   },
 )
 
-// export const verifyEmail = createAsyncThunk(
-//   'auth/verifyEmail',
-//   async(req) => {
-//     try {
-//       const {data} = await axios.get(`http://localhost:5000/api/users/verify/${req.params.token}`)
-//       return data
-//     } catch (error) {
-//       console.log(error)
-//     }
-//   }
-// )
-
 export const loginUser = createAsyncThunk(
   'auth/loginUser',
   async ({ username_or_email, password }) => {
@@ -56,11 +44,9 @@ export const loginUser = createAsyncThunk(
   },
 )
 
-export const getMe = createAsyncThunk('auth/getMe', async () => {
+export const getUserData = createAsyncThunk('auth/getUserData', async () => {
   try {
     const { data } = await axios.get('http://localhost:5000/api/auth/me', { withCredentials: true })
-    // console.log(data)
-    // localStorage.setItem('me', data.user)
     return data
   } catch (error) {
     console.log(error)
@@ -82,10 +68,27 @@ export const passwordForgot = createAsyncThunk(
   }
 );
 
+// export const resetPassword = createAsyncThunk(
+//   "auth/resetPassword",
+//   async ({ newPassword, repeatPassword, token }) => {
+//     try {
+//       const { data } = await axios.post(`http://localhost:5000/api/auth/recover/${token}}`,
+//         {
+//           new_password: newPassword,
+//           confirm_password: repeatPassword
+//         })
+//         return data
+//     } catch (error) {
+//       console.log(error)
+//     }
+//   }
+// )
+
 export const verifyPassword = createAsyncThunk(
   "auth/verifyPassword",
   async ({ new_password, confirm_password, token }) => {
     try {
+      console.log(new_password)
       const { data } = await axios.post(`http://localhost:5000/api/auth/recover/${token}`, {
         new_password,
         confirm_password,
@@ -98,44 +101,12 @@ export const verifyPassword = createAsyncThunk(
   }
 );
 
-// function setCookie(name, value, options = {}) {
-
-//   options = {
-//     path: '/',
-//     // при необходимости добавьте другие значения по умолчанию
-//     ...options
-//   };
-
-//   if (options.expires instanceof Date) {
-//     options.expires = options.expires.toUTCString();
-//   }
-
-//   let updatedCookie = encodeURIComponent(name) + "=" + encodeURIComponent(value);
-
-//   for (let optionKey in options) {
-//     updatedCookie += "; " + optionKey;
-//     let optionValue = options[optionKey];
-//     if (optionValue !== true) {
-//       updatedCookie += "=" + optionValue;
-//     }
-//   }
-
-//   document.cookie = updatedCookie;
-// }
-
-// function deleteCookie(name) {
-//   setCookie(name, "", {
-//     'max-age': -1
-//   })
-// }
 
 export const logout = createAsyncThunk(
   "auth/logout",
   async () => {
     try {
-      const { data } = await axios.post('http://localhost:5000/api/auth/logout', { withCredentials: true })
-      // deleteCookie('accessToken')
-      // deleteCookie('jwt')
+      const { data } = await axios.get('http://localhost:5000/api/auth/logout', { withCredentials: true })
       console.log(data)
       return data
     }
@@ -177,6 +148,7 @@ export const authSlice = createSlice({
       state.isLoading = false
       state.status = action.payload.message
       state.user = action.payload.user
+      state.userId = action.payload.user?._id
     },
     [loginUser.rejected]: (state, action) => {
       state.status = action.payload.message
@@ -193,6 +165,7 @@ export const authSlice = createSlice({
       state.isLoading = false
       state.status = action.payload?.message
       state.me = null
+      state.userId = null
     },
     [logout.rejected]: (state, action) => {
       state.status = action.payload.message
@@ -200,18 +173,17 @@ export const authSlice = createSlice({
     },
 
     //Check authorization (Get ME)
-    [getMe.pending]: (state) => {
+    [getUserData.pending]: (state) => {
       state.isLoading = true
       state.status = null
     },
-    [getMe.fulfilled]: (state, action) => {
+    [getUserData.fulfilled]: (state, action) => {
       state.isLoading = false
       state.status = null
-      // state.userID = localStorage.getItem('userId')
       state.me = action.payload?.user
-      // state.token = action.payload?.token
+      state.userId = action.payload?.user._id
     },
-    [getMe.rejected]: (state, action) => {
+    [getUserData.rejected]: (state, action) => {
       state.status = action.payload.message
       state.isLoading = false
     },
@@ -225,7 +197,6 @@ export const authSlice = createSlice({
       state.isLoading = false;
       state.status = action.payload.message;
       state.user = action.payload.user;
-      // state.token = action.payload.token;
     },
     [passwordForgot.rejectWithValue]: (state, action) => {
       state.status = action.payload.message;
@@ -240,7 +211,6 @@ export const authSlice = createSlice({
       state.isLoading = false;
       state.status = action.payload.message;
       state.user = action.payload.user;
-      // state.token = action.payload.token;
     },
     [verifyPassword.rejectWithValue]: (state, action) => {
       state.status = action.payload.message;
