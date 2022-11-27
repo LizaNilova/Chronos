@@ -22,9 +22,9 @@ export class CalendarController {
       });
 
       // если у нас нет никаких календарей в бд, то создается калентарь с типом "основной"
-      const calendars = await Calendar.find();
-      if (calendars.length < 1) newCalendar.type = "main";
-      else if (calendars.length >= 1) newCalendar.type = "additional";
+      const calendars = await Calendar.findOne({ author: userId });
+      if (!calendars) newCalendar.type = "main";
+      else newCalendar.type = "additional";
       await newCalendar.save();
       return res.json(newCalendar);
     } catch (error) {

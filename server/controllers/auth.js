@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import mailTransport from "../utils/mailTransport.js";
 import asyncHandler from "express-async-handler";
+import { createMainCalendar } from "../utils/createMainCalendar.js";
 
 export class AuthController {
   async register(req, res) {
@@ -102,6 +103,7 @@ export class AuthController {
         return res.json({ message: "An Email sent to your account again" });
       }
 
+      createMainCalendar(user);
       const isPasswordCorrect = await bcrypt.compare(password, user.password);
       if (!isPasswordCorrect) {
         return res.json({ success: false, message: "Uncorrect password" });
