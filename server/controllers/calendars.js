@@ -38,8 +38,9 @@ export class CalendarController {
         req.body;
 
       const calendar = await Calendar.findById(req.params.id);
+      const member = await Calendar.find({ members: req.user._id });
 
-      if (req.user._id.equals(calendar.author)) {
+      if (req.user._id.equals(calendar.author) || member.length > 0) {
         if (name) calendar.name = name;
         calendar.description = description;
         if (color) calendar.color = color;
@@ -67,7 +68,8 @@ export class CalendarController {
         type: "additional",
         _id: req.params.id,
       });
-      if (req.user._id.equals(calendar.author)) {
+      const member = await Calendar.find({ members: req.user._id });
+      if (req.user._id.equals(calendar.author) || member.length > 0) {
         const calendar = await Calendar.findOneAndDelete({
           type: "additional",
           _id: req.params.id,
