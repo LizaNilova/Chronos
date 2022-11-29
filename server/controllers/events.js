@@ -34,7 +34,7 @@ export class EventController {
         repeat,
       } = req.body;
 
-      if (!calendars || !date_start || !date_end)
+      if (!calendars || !date_start)
         return res.json({ message: "Content can not be empty" });
 
       // categories = id category
