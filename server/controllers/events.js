@@ -83,6 +83,7 @@ export class EventController {
     try {
       const {
         remind,
+        calendars,
         repeat,
         name,
         description,
@@ -108,6 +109,7 @@ export class EventController {
           if (type) event.type = type;
           if (completed) event.completed = completed;
           if (repeat) event.repeat = repeat;
+          if (calendars) event.calendars = calendars;
           await event.save();
 
           return res.json(event);
