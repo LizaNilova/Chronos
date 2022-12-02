@@ -1,7 +1,7 @@
 import React from 'react'
 import { Routes, Route } from 'react-router-dom'
 import { RecoverPasswordPage } from '../pages/RecoverPasswordPage';
-import { MainPage } from '../pages/MainPage';
+import MainPage from '../pages/MainPage';
 import { RegistrationPage } from '../pages/RegistrationPage';
 import { VerifyEmailPage } from '../pages/VerifyEmailPage';
 import { LoginPage } from '../pages/LoginPage';

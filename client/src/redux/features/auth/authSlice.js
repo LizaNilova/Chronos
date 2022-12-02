@@ -12,7 +12,7 @@ export const registerUser = createAsyncThunk(
   'auth/registerUser',
   async ({ username, full_name, password, email, repeatPassword }) => {
     try {
-      const { data } = await axios.post('http://localhost:5000/api/auth/register', {
+      const { data } = await axios.post('http://localhost:3002/api/auth/register', {
         username,
         full_name,
         password,
@@ -30,7 +30,7 @@ export const loginUser = createAsyncThunk(
   'auth/loginUser',
   async ({ username_or_email, password }) => {
     try {
-      const { data } = await axios.post('http://localhost:5000/api/auth/login', {
+      const { data } = await axios.post('http://localhost:3002/api/auth/login', {
         username_or_email,
         password
       }, { withCredentials: true })
@@ -46,7 +46,7 @@ export const loginUser = createAsyncThunk(
 
 export const getUserData = createAsyncThunk('auth/getUserData', async () => {
   try {
-    const { data } = await axios.get('http://localhost:5000/api/auth/me', { withCredentials: true })
+    const { data } = await axios.get('http://localhost:3002/api/auth/me', { withCredentials: true })
     return data
   } catch (error) {
     console.log(error)
@@ -58,7 +58,7 @@ export const passwordForgot = createAsyncThunk(
   "auth/passwordForgot",
   async ({ email }) => {
     try {
-      const { data } = await axios.post("http://localhost:5000/api/auth/recover", {
+      const { data } = await axios.post("http://localhost:3002/api/auth/recover", {
         email,
       }, { withCredentials: true });
       return data;
@@ -89,7 +89,7 @@ export const verifyPassword = createAsyncThunk(
   async ({ new_password, confirm_password, token }) => {
     try {
       console.log(new_password)
-      const { data } = await axios.post(`http://localhost:5000/api/auth/recover/${token}`, {
+      const { data } = await axios.post(`http://localhost:3002/api/auth/recover/${token}`, {
         new_password,
         confirm_password,
       }, { withCredentials: true });
@@ -106,7 +106,7 @@ export const logout = createAsyncThunk(
   "auth/logout",
   async () => {
     try {
-      const { data } = await axios.get('http://localhost:5000/api/auth/logout', { withCredentials: true })
+      const { data } = await axios.get('http://localhost:3002/api/auth/logout', { withCredentials: true })
       console.log(data)
       return data
     }
