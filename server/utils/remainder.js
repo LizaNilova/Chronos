@@ -14,7 +14,7 @@ export const remainder = async () => {
           date.getFullYear(),
           date.getMonth() + 1,
           date.getDate(),
-          date.getHours(),
+          date.getUTCHours(),
           date.getMinutes(),
         ].join("-");
         if (
@@ -22,7 +22,7 @@ export const remainder = async () => {
             event[i].date_start.getFullYear(),
             event[i].date_start.getMonth() + 1,
             event[i].date_start.getDate(),
-            event[i].date_start.getHours() - 1,
+            event[i].date_start.getUTCHours(),
             event[i].date_start.getMinutes(),
           ].join("-") === date_remaind
         ) {
@@ -65,14 +65,18 @@ export const remainder = async () => {
           date.getFullYear(),
           date.getMonth() + 1,
           date.getDate(),
-          date.getHours() + 1,
+          date.getUTCHours() - 1,
         ].join("-");
+
+        // 6 5 - 5 4
+        // 6 5 - 4 3
+
         if (
           [
             event[i].date_start.getFullYear(),
             event[i].date_start.getMonth() + 1,
             event[i].date_start.getDate(),
-            event[i].date_start.getHours() - 1,
+            event[i].date_start.getUTCHours(),
           ].join("-") === date_remaind
         ) {
           const user = await User.findById(event[i].author);
@@ -90,15 +94,16 @@ export const remainder = async () => {
           date.getFullYear(),
           date.getMonth() + 1,
           date.getDate(),
-          date.getHours(),
+          date.getUTCHours(),
           date.getMinutes() + 5,
         ].join("-");
+
         if (
           [
             event[i].date_start.getFullYear(),
             event[i].date_start.getMonth() + 1,
             event[i].date_start.getDate(),
-            event[i].date_start.getHours() - 1,
+            event[i].date_start.getUTCHours(),
             event[i].date_start.getMinutes(),
           ].join("-") === date_remaind
         ) {
