@@ -63,7 +63,7 @@ export default function DefaultCalendars() {
     return (
         <>
             {editingIdx >= 0 && <ModalEditCalendar calendars={calendars} calendar={calendars[editingIdx]} cancelClick={cancelEditClick} />}
-            <div className='m-2 p-2 flex flex-row w-2/3 items-center justify-center'>
+            <div className='m-2 p-2 flex flex-row w-2/3 items-center justify-start'>
                 <div>
                     Default calendars
                 </div>
