@@ -10,18 +10,12 @@ export default function MonthlyView(props) {
 
   const events = useSelector(state => state.calendars.choosedEvents);
   const calendars = useSelector(state => state.calendars.calendars);
-  // console.log(events);
-  // const choosedCalendars = useSelector(state => state.calendars.choosedCalendars);
+
   const [weeks, setWeeks] = useState(1);
 
   useEffect(() => {
     let weeks = Math.trunc((props.daysCount + props.firstDay) / 7);
     if ((props.daysCount + props.firstDay) % 7 >= 0) weeks++;
-    // console.log(weeks);
-    // if(weeks < 6)
-    // {
-    //   weeks++;
-    // }
     setWeeks(weeks);
   }, [props.daysCount, props.firstDay, props.currentDay]);
 
@@ -30,11 +24,6 @@ export default function MonthlyView(props) {
     for (let i = 0; i < 24; i++) {
       // let max = 1;
       const result = hours_events.filter(hour_event => hour_event.hour === i);
-      // result.forEach(res => {
-      //     if (res.size > max) {
-      //         max = res.size;
-      //     }
-      // })
       if (result.length > 0) {
         content.push(
           <div className='flex flex-col p-1 w-full '>
@@ -42,64 +31,6 @@ export default function MonthlyView(props) {
               result.map(res => {
                 let idx = calendars.findIndex(calendar => calendar._id === res.event.calendar);
                 let color = calendars[idx]?.color;
-                
-                // console.log(idx, calendars[idx]);
-                
-                // let width;
-                // if (result.length > 1) {
-                //     switch (result.length) {
-                //         case 2:
-                //             width = 'w-1/2'
-                //             break;
-                //         case 3:
-                //             width = 'w-1/3'
-                //             break;
-                //         // case 4:
-                //         //     width = 'w-1/4'
-                //         //     break;
-                //         // case 5:
-                //         //     width = 'w-1/5'
-                //         //     break;
-                //         // case 6:
-                //         //     width = 'w-1/6'
-                //         //     break;
-
-
-                //         default:
-                //           width = 'w-1/3' 
-                //             break;
-                //     }
-                // } else width = 'w-full';
-                // let height;
-                // if (res.size > 1) {
-                //     switch (res.size) {
-                //         case 2:
-                //             height = 'h-[210%]'
-                //             break;
-                //         case 3:
-                //             height = 'h-[320%]'
-                //             break;
-                //         case 4:
-                //             height = 'h-[440%]'
-                //             break;
-                //         case 5:
-                //             height = 'h-[560%]'
-                //             break;
-                //         case 6:
-                //             height = 'h-[670%]'
-                //             break;
-                //         case 7:
-                //             height = 'h-[790%]'
-                //             break;
-                //         default:
-                //             break;
-                //     }
-                // } else {
-                //     height = 'h-full'
-                // }
-
-                
-
                 return (
                   <Event color={color} repeat={res.event.repeat} width={'w-full'} height={'h-full'} id={res.event.id} name={res.event.name} type={res.event.type} description={res.event.description} date_start={res.event.date_start} date_end={res.event.date_end} />
                 )
@@ -213,7 +144,7 @@ export default function MonthlyView(props) {
   }
 
   return (
-    <div className='flex flex-col w-full h-2screen'>
+    <div className='flex flex-col w-full h-2screen px-2 py-1'>
       <div className='flex flex-row p-1 w-full '>
         {props.dayOfWeek.map(day => {
           return (
