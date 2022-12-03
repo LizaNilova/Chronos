@@ -171,35 +171,30 @@ export default function ModalEventEdit(props) {
                     </div>
                     {/*body*/}
                     <div className="relative py-5 px-8 flex flex-col">
-                            {/* <div className='flex m-1 p-1 text-lg '>
-                                <button name='event' onClick={changeType} className={state.type === 'event' ? 'mx-1 px-3 py-1 hover:cursor-pointer hover:text-slate-300 rounded-md bg-slate-500' : 'mx-1 px-3 py-1 hover:cursor-pointer hover:text-slate-300 rounded-md'}>Event</button>
-                                <button name='task' onClick={changeType} className={state.type === 'task' ? 'mx-1 px-3 py-1 hover:cursor-pointer hover:text-slate-300 rounded-md bg-slate-500' : 'mx-1 px-3 py-1 hover:cursor-pointer hover:text-slate-300 rounded-md'}>Task</button>
-                                <button name='reminder' onClick={changeType} className={state.type === 'reminder' ? 'mx-1 px-3 py-1 hover:cursor-pointer hover:text-slate-300 rounded-md bg-slate-500' : 'mx-1 px-3 py-1 hover:cursor-pointer hover:text-slate-300 rounded-md'}>Reminder</button>
-                            </div> */}
                             <div className='text-black flex flex-col'>
                                 <label className='text-slate-200'>Enter the {state.type} name:</label>
-                                <input className='m-2 p-2 outline-none rounded-lg' type="text" name="name" placeholder='Name ...' onChange={handleChange} defaultValue={state.name}/>
+                                <input className='m-2 p-2 outline-none rounded-lg border-2 focus:border-indigo-500' type="text" name="name" placeholder='Name ...' onChange={handleChange} defaultValue={state.name}/>
                                 <label className='text-slate-200'>Enter the {state.type} description (optional):</label>
                                 <textarea name="description" rows="5" className="outline-none resize-none block p-2 m-2 
-                            text-sm text-gray-900 bg-slate-100 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 "
+                            text-sm text-gray-900 bg-slate-100 rounded-lg border-2 focus:border-indigo-500 "
                                     placeholder="Description of event ..." onChange={handleChange} defaultValue={state.description}></textarea>
 
                                 <label className='text-slate-200'>Choose the {state.type} date {state.type !== 'task' && 'and time'}:</label>
                                 {
                                     state.type === 'task' ?
-                                        <input className='m-2 p-2 outline-none rounded-lg ' type='date' name="date" min="2022-01-01T00:00" onChange={handleChange} defaultValue={state.date}/>
+                                        <input className='m-2 p-2 outline-none rounded-lg border-2 focus:border-indigo-500' type='date' name="date" min="2022-01-01T00:00" onChange={handleChange} defaultValue={state.date}/>
                                         :
                                         <>
-                                            <input className='m-2 p-2 outline-none rounded-lg ' type='date' name="date" min="2022-01-01T00:00" onChange={handleChange} defaultValue={state.date}/>
+                                            <input className='m-2 p-2 outline-none rounded-lg border-2 focus:border-indigo-500' type='date' name="date" min="2022-01-01T00:00" onChange={handleChange} defaultValue={state.date}/>
                                             {
                                                 <div className='flex flew-row items-center w-full'>
                                                     <label className='font-semibold text-white'>{state.type !== 'reminder' && 'Start time:'}</label>
-                                                    <input className='m-2 p-2 outline-none rounded-lg' type='time' step="3600" name='time_start' onChange={handleChange} defaultValue={state.time_start}/>
+                                                    <input className='m-2 p-2 outline-none rounded-lg border-2 focus:border-indigo-500' type='time' step="3600" name='time_start' onChange={handleChange} defaultValue={state.time_start}/>
                                                     {
                                                         state.type !== 'reminder' &&
                                                         <>
                                                             <label className='font-semibold text-white'>End time:</label>
-                                                            <input className='m-2 p-2 outline-none rounded-lg' type='time' step="3600" name='time_end' onChange={handleChange} defaultValue={state.time_end}/>
+                                                            <input className='m-2 p-2 outline-none rounded-lg border-2 focus:border-indigo-500' type='time' step="3600" name='time_end' onChange={handleChange} defaultValue={state.time_end}/>
                                                         </>
                                                     }
                                                 </div>
@@ -210,7 +205,7 @@ export default function ModalEventEdit(props) {
                                     <>
                                         <label className='text-slate-200'>Choose the {state.type} repeat ratio (optional):</label>
                                         <select value={state?.repeat} name="repeat"
-                                            className="outline-none m-2 border border-gray-300 text-gray-900 text-sm rounded-lg block p-2.5" onChange={handleChange}>
+                                            className="outline-none m-2 text-gray-900 text-sm rounded-lg block p-2.5 border-2 focus:border-indigo-500" onChange={handleChange}>
                                             <option value="none">None</option>
                                             <option value="day">Every day</option>
                                             <option value="week">Every week</option>
@@ -221,7 +216,7 @@ export default function ModalEventEdit(props) {
                                 }
                                 <label className='text-slate-200'>Choose a calendar to store it in:</label>
                                 <select value={state?.calendar} name="calendar" onChange={handleChange}
-                                    className="outline-none m-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 ">
+                                    className="outline-none m-2 bg-gray-50 text-gray-900 text-sm rounded-lg block p-2.5 border-2 focus:border-indigo-500">
                                     {
                                         calendars.map(calendar => {
                                             return (
@@ -234,7 +229,7 @@ export default function ModalEventEdit(props) {
                                     <>
                                         <label className='text-slate-200'>Choose a remind (optional):</label>
                                         <select value={state?.remind} name="remind"
-                                            className="outline-none m-2 border border-gray-300 text-gray-900 text-sm rounded-lg block p-2.5" onChange={handleChange}>
+                                            className="outline-none m-2 text-gray-900 text-sm rounded-lg block p-2.5 border-2 focus:border-indigo-500" onChange={handleChange}>
                                             <option value="">None</option>
                                             <option value="day_before">Day before</option>
                                             <option value="hour_before">Hour before</option>
