@@ -46,8 +46,8 @@ export default function Header(props) {
                 <div className='w-1/2 flex items-center justify-center'>
                     <select defaultValue={'month'} name="viewType"
                             className=" w-2/3 outline-none m-2 
-                            bg-gray-100 border 
-                            border-gray-300 text-gray-900 text-base font-semibold rounded-lg focus:ring-blue-500 
+                            bg-zinc-300 border 
+                            border-indigo-800 text-gray-900 text-base font-semibold rounded-lg focus:ring-blue-500 
                             focus:border-blue-500 block p-2.5 hover:cursor-pointer" onChange={changeType}>
                             <option value="month">Month</option>
                             <option value="week">Week</option>

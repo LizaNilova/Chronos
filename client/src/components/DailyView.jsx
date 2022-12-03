@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 import drawTimeColumn from '../functions/drawTimeColumn';
 import getEventsByHours from '../functions/getEventsByHours';
 import getEventsOfDay from '../functions/getEventsOfDay';
-// import { setEditing } from '../reducers/calendarSlice';
 import Event from './Event';
 
 export default function DailyView(props) {
@@ -12,7 +11,6 @@ export default function DailyView(props) {
 
     useEffect(() => {
         setDay(props.currentDay);
-        // console.log(props.currentDay)
     }, [props.currentDay]);
 
     const events = useSelector(state => state.calendars.choosedEvents);

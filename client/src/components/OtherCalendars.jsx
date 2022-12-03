@@ -163,9 +163,9 @@ export default function OtherCalendars() {
                                 }
                                 return (
                                     <div className={`px-3 mx-3 mb-2 flex items-center rounded border border-gray-200 dark:border-gray-700 ${color}`} key={calendar._id}>
-                                        <input onChange={onChange} id={calendar._id} defaultChecked type="checkbox" value="" name="bordered-checkbox" className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
+                                        <input onChange={onChange} id={calendar._id} defaultChecked type="checkbox" value="" name="bordered-checkbox" className="w-4 h-4 text-blue-600 bg-gray-100 rounded border-slate-700 outline-none" />
                                         <div className='flex flex-row w-full items-center'>
-                                            <label htmlFor="bordered-checkbox-1" className="py-3 ml-2 w-full text-sm font-medium">{calendar.name}</label>
+                                            <label htmlFor="bordered-checkbox-1" className="py-3 ml-2 w-full text-base font-semibold">{calendar.name}</label>
                                             <button id={calendar._id} name={calendar.name} onClick={editPeopleGroup} className="hover:cursor-pointer mr-1">
                                             <svg pointerEvents='none' xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-5 h-5">
                                                 <path strokeLinecap="round" strokeLinejoin="round" d="M18 18.72a9.094 9.094 0 003.741-.479 3 3 0 00-4.682-2.72m.94 3.198l.001.031c0 .225-.012.447-.037.666A11.944 11.944 0 0112 21c-2.17 0-4.207-.576-5.963-1.584A6.062 6.062 0 016 18.719m12 0a5.971 5.971 0 00-.941-3.197m0 0A5.995 5.995 0 0012 12.75a5.995 5.995 0 00-5.058 2.772m0 0a3 3 0 00-4.681 2.72 8.986 8.986 0 003.74.477m.94-3.197a5.971 5.971 0 00-.94 3.197M15 6.75a3 3 0 11-6 0 3 3 0 016 0zm6 3a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0zm-13.5 0a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />

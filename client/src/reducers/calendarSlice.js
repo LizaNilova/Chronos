@@ -165,9 +165,20 @@ const calendarsSlice = createSlice({
     },
     reducers:{
         setCalendars(state, action){
-            state.calendars = action.payload;
+            let calendars = action.payload;
+            calendars.push({
+            _id:"1",
+            type:"main",
+            visible:true,
+            national_holidays:true,
+            author:"1",
+            name:"National holidays",
+            color:"",
+            description:"Main calendar with holidays"})
+            
+            state.calendars = calendars;
             let choosedCalendars = [];
-            action.payload.forEach(calendar => {
+            calendars.forEach(calendar => {
                 choosedCalendars.push(calendar._id);
             })
             state.choosedCalendars = choosedCalendars;
@@ -180,17 +191,6 @@ const calendarsSlice = createSlice({
         setUserEvents(state, action)
         {   
             let holidays = action.payload.holidays;
-            // let holidaysEdited = [];
-            // holidaysEdited = holidays.map(holiday => {
-            //     return({
-            //         id: holiday.id,
-            //         name: holiday.summary,
-            //         date_start: holiday.start.date,
-            //         type:'holiday',
-            //         description: holiday.summary,
-            //         completed: false
-            //     })
-            // })
             let events = action.payload.events;
             holidays.forEach(holiday => {
                 // if(!holiday.summary.includes('Suspended'))
@@ -203,7 +203,7 @@ const calendarsSlice = createSlice({
                     completed: false,
                     remind: '',
                     repeat: 'none',
-                    calendars: [],
+                    calendars: ["1"],
                     date_end: null
                 })
             })
