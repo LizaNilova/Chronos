@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { setChoosedCalendars, setEditing } from '../reducers/calendarSlice';
 import ModalEditCalendar from './ModalEditCalendar';
+import ModalInvitePeople from './ModalInvitePeople';
 
 export default function DefaultCalendars() {
 
@@ -10,6 +11,8 @@ export default function DefaultCalendars() {
     const [isHidden, setDefaultHidden] = useState(false);
 
     const [editingIdx, setEditingState] = useState(-1);
+
+    const [addingFriendsID, setAdding] = useState(-1);
 
     const calendars = useSelector(state => state.calendars.calendars);
     const choosed = useSelector(state => state.calendars.choosedCalendars);
@@ -53,16 +56,24 @@ export default function DefaultCalendars() {
     const cancelEditClick = () => {
         dispatch(setEditing({ isEditing: false, type: '', id: null }));
         setEditingState(-1);
+        setAdding(-1);
     }
 
-    const editPeopleGroup = () => {
-
+    const editPeopleGroup = (event) => {
+        console.log(event.target.id);
+        let idx = calendars.findIndex(calendar => calendar._id === event.target.id);
+        setAdding(idx);
     }
+
+    // const cancelAdding
 
     // console.log(calendars);
     return (
         <>
+            {addingFriendsID >= 0 && <ModalInvitePeople calendars={calendars} calendar={calendars[addingFriendsID]} cancelClick={cancelEditClick} />}
+
             {editingIdx >= 0 && <ModalEditCalendar calendars={calendars} calendar={calendars[editingIdx]} cancelClick={cancelEditClick} />}
+            
             <div className='m-2 p-2 flex flex-row w-2/3 items-center justify-start'>
                 <div>
                     Default calendars

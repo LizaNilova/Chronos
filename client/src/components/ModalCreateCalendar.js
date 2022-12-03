@@ -61,10 +61,10 @@ export default function ModalCreateCalendar() {
                     <div className="relative py-5 px-8 flex flex-col">
                         <div className='text-black flex flex-col'>
                             <label className='text-slate-200'>Enter calendar name:</label>
-                            <input className='m-2 p-2 outline-none rounded-lg' type="text" name="name" placeholder='Name ...' onChange={handleChange} />
+                            <input className='m-2 p-2 outline-none rounded-lg border-2 focus:border-indigo-500' type="text" name="name" placeholder='Name ...' onChange={handleChange} />
                             <label className='text-slate-200'>Enter calendar description (optional):</label>
                             <textarea name="description" rows="5" className="outline-none resize-none block p-2 m-2 
-                    text-sm text-gray-900 bg-slate-100 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 "
+                    text-sm text-gray-900 bg-slate-100 rounded-lg border-2 focus:border-indigo-500 "
                                 placeholder="Description of event ..." onChange={handleChange}></textarea>
                             <label className='text-slate-200'>Pick calendar events color:</label>
                             <ColorPicker setColor={setColor} />

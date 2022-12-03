@@ -139,6 +139,38 @@ export const deleteEvent = createAsyncThunk(
     }
 )
 
+export const inviteFriend = createAsyncThunk(
+    'api/users/invite',
+    async function({email, id_calendar},{dispatch})
+    {
+        try {
+            let response = await axios.post(`http://localhost:3002/api/users/invite`,
+                {email: email, id_calendar: id_calendar},
+                { withCredentials: true });
+            console.log(response.data);
+            // dispatch(removeEvent({events: events, choosed: choosed, id: id}));
+        } catch (error) {
+            console.log(error);
+        }
+    }
+)
+
+// export const getMembers = createAsyncThunk(
+//     'api/users/calendars/:id',
+//     async function({member},{dispatch})
+//     {
+//         try {
+//             let response = await axios.post(`http://localhost:3002/api/users/invite`,
+//                 {email: email, id_calendar: id_calendar},
+//                 { withCredentials: true });
+//             console.log(response.data);
+//             // dispatch(removeEvent({events: events, choosed: choosed, id: id}));
+//         } catch (error) {
+//             console.log(error);
+//         }
+//     }
+// )
+
 
 const calendarsSlice = createSlice({
     name: 'calendar',
