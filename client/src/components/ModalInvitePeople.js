@@ -10,6 +10,7 @@ const ModalInvitePeople = (props) => {
 
     const [members, setMembers] = useState([]);
 
+    const [errMSG, setErr] = useState(null);
     // console.log('Props:',props);
 
     useEffect(() => {
@@ -22,16 +23,26 @@ const ModalInvitePeople = (props) => {
 
     const handleChange = (e) => {
         setEmail(e.target.value);
+        setErr(null);
         // console.log(e.target.value);
     }
 
     const inviteFriend = () => {
         if(email.length > 0)
         {
-            
-            dispatch(inviteFriend({email: email, id_calendar: props.calendar._id}));
+            axios.post(`http://localhost:3002/api/users/invite`,{email: email, id_calendar: props.calendar._id},{ withCredentials: true })
+            .then(response => {
+                console.log(response.data);
+                if(!response.data.success)
+                {
+                    setErr(response.data.message);
+                } else
+                {
+                    props.cancelClick();
+                }
+            })
         }
-        props.cancelClick();
+        
     }
 
     return (
@@ -63,6 +74,10 @@ const ModalInvitePeople = (props) => {
                         })}
                         <input className='m-2 p-2 outline-none rounded-lg text-black border-2 focus:border-indigo-500' type="email" 
                             name="email" placeholder='Type email of your friend ...' onChange={handleChange} />
+                        {
+                            errMSG && 
+                            <div className='text-xl text-red-600'>{errMSG}</div>
+                        }
                     </div>
                     {/*footer*/}
                     <div className="flex items-center justify-end p-3 border-t border-solid border-slate-200 rounded-b">
