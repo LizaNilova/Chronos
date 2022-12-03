@@ -37,7 +37,20 @@ export class EventController {
       if (!calendars || !date_start)
         return res.json({ message: "Content can not be empty" });
 
-      // categories = id category
+      if (date_start) {
+        const date_s = new Date(`${date_start}T00:00:00`);
+        date_start = !date_start.includes("T")
+          ? (date_start = date_s)
+          : (date_start = date_start);
+      }
+      if (date_end) {
+        const date_e = new Date(`${date_end}T00:00:00`);
+        date_end = !date_end.includes("T")
+          ? (date_end = date_e)
+          : (date_end = date_end);
+      }
+
+      // console.log(date_start, date_end);
 
       if (type !== "reminder" || type !== "event") remind = "";
       const newEvent = new Event({
@@ -81,7 +94,7 @@ export class EventController {
   }
   async updateEvent(req, res) {
     try {
-      const {
+      let {
         remind,
         calendars,
         repeat,
@@ -92,6 +105,19 @@ export class EventController {
         type,
         completed,
       } = req.body;
+
+      if (date_start) {
+        const date_s = new Date(`${date_start}T00:00:00`);
+        date_start = !date_start.includes("T")
+          ? (date_start = date_s)
+          : (date_start = date_start);
+      }
+      if (date_end) {
+        const date_e = new Date(`${date_end}T00:00:00`);
+        date_end = !date_end.includes("T")
+          ? (date_end = date_e)
+          : (date_end = date_end);
+      }
 
       const event = await Event.findById(req.params.id);
 
@@ -116,6 +142,7 @@ export class EventController {
         } else return res.json({ message: "No access!" });
       }
     } catch (error) {
+      console.log(error);
       res.json({ message: "Updating event error" });
     }
   }

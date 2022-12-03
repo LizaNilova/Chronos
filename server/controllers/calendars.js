@@ -17,7 +17,6 @@ export class CalendarController {
         description,
         members: members,
         color,
-        icon: "https://cdn-icons-png.flaticon.com/512/4206/4206324.png",
         author: userId,
       });
 
@@ -34,8 +33,7 @@ export class CalendarController {
   }
   async updateCalendar(req, res) {
     try {
-      const { name, description, color, visible, national_holidays, members } =
-        req.body;
+      const { name, description, color, visible, members } = req.body;
 
       const calendar = await Calendar.findById(req.params.id);
       const member = await Calendar.find({ members: req.user._id });
@@ -46,7 +44,6 @@ export class CalendarController {
         if (color) calendar.color = color;
         // если тип клендаря дополнительный, то можно поменять visible
         if (calendar.type === "additional") calendar.visible = visible;
-        if (national_holidays) calendar.national_holidays = national_holidays;
         if (calendar.members.length === 0) {
           calendar.members = [];
         } else if (members) calendar.members = members;
