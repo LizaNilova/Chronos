@@ -50,7 +50,7 @@ export default function ModalEventEdit(props) {
             // datetime_start: (new Date(choosedEvents[index]?.date_start)).toISOString().slice(0, 10).replace(/-/g, "-").replace("T", " "),
             // datetime_end: (new Date(choosedEvents[index]?.date_end)).toISOString().slice(0, 10).replace(/-/g, "-").replace("T", " "),
             repeat: choosedEvents[index]?.repeat,
-            calendar: choosedEvents[index]?.calendars,
+            calendar: choosedEvents[index]?.calendars[0],
             remind: choosedEvents[index]?.remind
         }));
     }, [choosedEvents, props.id]);
@@ -110,7 +110,7 @@ export default function ModalEventEdit(props) {
                     dispatch(updateEvent({
                         remind: state.remind, name: state.name,
                         description: state.description, date_start: state.date + ' ' + state.time_start.toString(), date_end: state.date + ' ' + state.time_end.toString(),
-                        calendars: state.calendar, type: state.type, completed: false, repeat: state.repeat, id: props.id, events: events
+                        calendars: [state.calendar], type: state.type, completed: false, repeat: state.repeat, id: props.id, events: events
                     }));
                 } else setState(prevState => ({
                     ...prevState,
@@ -122,7 +122,7 @@ export default function ModalEventEdit(props) {
                     dispatch(updateEvent({
                         remind: state.remind, name: state.name,
                         description: state.description, date_start: state.date, date_end: '',
-                        calendars: state.calendar, type: state.type, completed: false, repeat: state.repeat, id: props.id, events: events
+                        calendars: [state.calendar], type: state.type, completed: false, repeat: state.repeat, id: props.id, events: events
                     }));
                 } else setState(prevState => ({
                     ...prevState,
@@ -134,7 +134,7 @@ export default function ModalEventEdit(props) {
                     dispatch(updateEvent({
                         remind: state.remind, name: state.name,
                         description: state.description, date_start: state.date + ' ' + state.time_start.toString(), date_end: '',
-                        calendars: state.calendar, type: state.type, completed: false, repeat: state.repeat, id: props.id, events: events
+                        calendars: [state.calendar], type: state.type, completed: false, repeat: state.repeat, id: props.id, events: events
                     }));
                 } else setState(prevState => ({
                     ...prevState,
@@ -147,7 +147,7 @@ export default function ModalEventEdit(props) {
         dispatch(setEditing({ editingIdx: false, type: '', id: null }));
     }
 
-    // console.log(state);
+    console.log(state);
 
     return (
         <div className=" text-white justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none bg-slate-600 bg-opacity-50">
@@ -190,24 +190,8 @@ export default function ModalEventEdit(props) {
                                         <input className='m-2 p-2 outline-none rounded-lg ' type='date' name="date" min="2022-01-01T00:00" onChange={handleChange} defaultValue={state.date}/>
                                         :
                                         <>
-                                            {/* <input className='m-2 p-2 outline-none rounded-lg ' type='date' name="date" min="2022-01-01T00:00" onChange={handleChange} defaultValue={state.date}/>
+                                            <input className='m-2 p-2 outline-none rounded-lg ' type='date' name="date" min="2022-01-01T00:00" onChange={handleChange} defaultValue={state.date}/>
                                             {
-                                                state.type !== 'reminder' ?
-                                                    <>
-                                                        <div className='text-white p-1'>{!state.setTime && 'All day by default'}</div>
-                                                        <div className='text-white p-1'>
-                                                            <input type='checkbox' className='m-2' onChange={changeTime} name='time' />
-                                                            <label className='font-semibold'>Set time</label>
-                                                        </div>
-                                                    </>
-                                                :
-                                                <>
-                                                    <input className='m-2 p-2 outline-none rounded-lg' type='time' step="3600" name='time_start' onChange={handleChange} defaultValue={state.time_start}/>
-                                                </>
-                                            } */}
-
-                                            {
-                                                // state.setTime &&
                                                 <div className='flex flew-row items-center w-full'>
                                                     <label className='font-semibold text-white'>{state.type !== 'reminder' && 'Start time:'}</label>
                                                     <input className='m-2 p-2 outline-none rounded-lg' type='time' step="3600" name='time_start' onChange={handleChange} defaultValue={state.time_start}/>
@@ -225,7 +209,7 @@ export default function ModalEventEdit(props) {
                                 {state.type !== 'task' &&
                                     <>
                                         <label className='text-slate-200'>Choose the {state.type} repeat ratio (optional):</label>
-                                        <select defaultValue={"none"} name="repeat"
+                                        <select value={state?.repeat} name="repeat"
                                             className="outline-none m-2 border border-gray-300 text-gray-900 text-sm rounded-lg block p-2.5" onChange={handleChange}>
                                             <option value="none">None</option>
                                             <option value="day">Every day</option>
@@ -236,7 +220,7 @@ export default function ModalEventEdit(props) {
                                     </>
                                 }
                                 <label className='text-slate-200'>Choose a calendar to store it in:</label>
-                                <select defaultValue={calendars[0]._id} name="calendar" onChange={handleChange}
+                                <select value={state?.calendar} name="calendar" onChange={handleChange}
                                     className="outline-none m-2 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 ">
                                     {
                                         calendars.map(calendar => {
@@ -249,7 +233,7 @@ export default function ModalEventEdit(props) {
                                 {state.type !== 'task' &&
                                     <>
                                         <label className='text-slate-200'>Choose a remind (optional):</label>
-                                        <select defaultValue={""} name="remind"
+                                        <select value={state?.remind} name="remind"
                                             className="outline-none m-2 border border-gray-300 text-gray-900 text-sm rounded-lg block p-2.5" onChange={handleChange}>
                                             <option value="">None</option>
                                             <option value="day_before">Day before</option>

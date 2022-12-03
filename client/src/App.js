@@ -1,6 +1,8 @@
 import useAuth from './utils/useAuth.js'
 import { useRoutes } from "./utils/useRoutes";
 
+import './App.css';
+
 import 'react-toastify/dist/ReactToastify.css'
 import { useSelector } from "react-redux";
 import {ToastContainer} from 'react-toastify'

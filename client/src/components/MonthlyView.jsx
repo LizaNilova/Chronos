@@ -39,31 +39,31 @@ const drawEvents = (hours_events) => {
             <div className='flex flex-col p-1 w-full '>
               {
                       result.map(res => {
-                          let width;
-                          if (result.length > 1) {
-                              switch (result.length) {
-                                  case 2:
-                                      width = 'w-1/2'
-                                      break;
-                                  case 3:
-                                      width = 'w-1/3'
-                                      break;
-                                  // case 4:
-                                  //     width = 'w-1/4'
-                                  //     break;
-                                  // case 5:
-                                  //     width = 'w-1/5'
-                                  //     break;
-                                  // case 6:
-                                  //     width = 'w-1/6'
-                                  //     break;
+                          // let width;
+                          // if (result.length > 1) {
+                          //     switch (result.length) {
+                          //         case 2:
+                          //             width = 'w-1/2'
+                          //             break;
+                          //         case 3:
+                          //             width = 'w-1/3'
+                          //             break;
+                          //         // case 4:
+                          //         //     width = 'w-1/4'
+                          //         //     break;
+                          //         // case 5:
+                          //         //     width = 'w-1/5'
+                          //         //     break;
+                          //         // case 6:
+                          //         //     width = 'w-1/6'
+                          //         //     break;
 
 
-                                  default:
-                                    width = 'w-1/3' 
-                                      break;
-                              }
-                          } else width = 'w-full';
+                          //         default:
+                          //           width = 'w-1/3' 
+                          //             break;
+                          //     }
+                          // } else width = 'w-full';
                           // let height;
                           // if (res.size > 1) {
                           //     switch (res.size) {
@@ -126,7 +126,7 @@ const getEventsGrid = (week, daysCount, firstDay, month, year, currentDay, event
     // console.log(events);
     let content = [];
     // let offset = 42 - daysCount - firstDay;
-    let key = 0;
+    // let key = 0;
     // for (let week = 1; week <= weeks; week++) {
       switch (week) {
         case 1:

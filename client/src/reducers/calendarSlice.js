@@ -129,7 +129,7 @@ export const deleteEvent = createAsyncThunk(
     async function({events, choosed, id},{dispatch})
     {
         try {
-            let response = await axios.delete(`http://localhost:3002/api/events/${id}`,
+            await axios.delete(`http://localhost:3002/api/events/${id}`,
                 { withCredentials: true });
             // console.log(response.data);
             dispatch(removeEvent({events: events, choosed: choosed, id: id}));
