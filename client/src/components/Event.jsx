@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setEditing } from '../reducers/calendarSlice';
 
@@ -8,15 +8,72 @@ const Event = (props) => {
 
     const viewType = useSelector(state => state.calendars.viewType);
 
+    const [color, setColor] = useState('bg-white');
+
     const editEvent = (event) => {
         // console.log(event.target.id);
         dispatch(setEditing({ editingIdx: true, type: 'event', id: event.target.id }));
     }
 
+    useEffect(() => {
+        switch (props?.color) {
+            case "#b80000":
+                setColor('bg-red_picker')
+                break;
+            case "#db3e00":
+                setColor('bg-orange_picker')
+                break;
+            case "#fccb00":
+                setColor('bg-yellow_picker')
+                break;
+            case "#008b02":
+                setColor('bg-green_picker')
+                break;
+            case "#006b76":
+                setColor('bg-cyan_picker')
+                break;
+            case "#1273de":
+                setColor('bg-sky_picker')
+                break;
+            case "#004dcf":
+                setColor('bg-blue_picker')
+                break;
+            case "#5300eb":
+                setColor('bg-violet_picker')
+                break;
+            case "#eb9694":
+                setColor('bg-pink_picker')
+                break;
+            case "#fad0c3":
+                setColor('bg-rose_picker')
+                break;
+            case "#fef3bd":
+                setColor('bg-fuchsia_picker')
+                break;
+            case "#c1e1c5":
+                setColor('bg-light_sky_picker')
+                break;
+            case "#bedadc":
+                setColor('bg-light_blue_picker')
+                break;
+            case "#c4def6":
+                setColor('bg-cyan_blue_picker')
+                break;
+            case "#bed3f3":
+                setColor('bg-blue_sky_picker')
+                break;
+            case "#d4c4fb":
+                setColor('bg-light_violet_picker')
+                break;
+            default:
+                setColor('bg-white')
+                break;
+        }
+    }, [props?.color]);
 
     // console.log(props);
     return (
-        <div className={`relative border inline-block bg-white ${props.width} ${props.height} text-center tooltip p-1 mb-1 bg-slate-100 rounded-md`}>
+        <div className={`relative border border-slate-900 inline-block ${props.width} ${props.height} text-center tooltip p-1 mb-1 ${color} rounded-md`}>
             {/* <div className='w-full flex flex-row items-center justify-between'>
                 <div className='font-semibold text-base hover:cursor-pointer' id={props.id} onClick={editEvent}>{props.name} {props.type ? (props.type) : ''}</div>
                 <button id={props.id} name={props.name} onClick={deleteEvent} className='hover:cursor-pointer'>

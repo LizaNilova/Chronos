@@ -68,7 +68,7 @@ export default function getEventsOfDay(events, day, month, year) {
         }
 
         if (dayStart === day && monthStart === month && yearStart === year) {
-            eventsOfDay.push({ id: event._id, name: event.name, type:event.type, repeat:event.repeat, description: event.description, date_start:event.date_start, date_end:event.date_end, month: monthStart, year: yearStart, day: dayStart, hoursStart: hourStart, minutesStart: minutesStart, hoursEnd: hoursEnd, minutesEnd: minutesEnd });
+            eventsOfDay.push({ id: event._id, name: event.name, type:event.type, calendar: event.calendars[0],repeat:event.repeat, description: event.description, date_start:event.date_start, date_end:event.date_end, month: monthStart, year: yearStart, day: dayStart, hoursStart: hourStart, minutesStart: minutesStart, hoursEnd: hoursEnd, minutesEnd: minutesEnd });
         }
     })
     return eventsOfDay;

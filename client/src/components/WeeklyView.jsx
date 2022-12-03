@@ -8,6 +8,7 @@ import Event from './Event';
 
 export default function WeeklyView(props) {
     const events = useSelector(state => state.calendars.choosedEvents);
+    const calendars = useSelector(state => state.calendars.calendars);
     // console.log('rerender'); 
     const [week, setWeek] = useState(1); // current week number
     const [weeks, setWeeks] = useState(1); // how many weeks we have at that month
@@ -179,8 +180,10 @@ export default function WeeklyView(props) {
                                 } else {
                                     height = 'h-full'
                                 }
+                                let idx = calendars.findIndex(calendar => calendar._id === res.event.calendar);
+                                let color = calendars[idx]?.color;
                                 return (
-                                    <Event width={width} height={height} id={res.event.id} 
+                                    <Event color={color} width={width} height={height} id={res.event.id} 
                                     name={res.event.name} type={res.event.type} 
                                     description={res.event.description} 
                                     date_start={res.event.date_start} date_end={res.event.date_end}

@@ -16,6 +16,7 @@ export default function DailyView(props) {
     }, [props.currentDay]);
 
     const events = useSelector(state => state.calendars.choosedEvents);
+    const calendars = useSelector(state => state.calendars.calendars);
 
     const drawDay = (events, month, year, day) => {
         let content = [];
@@ -80,18 +81,21 @@ export default function DailyView(props) {
                                 } else {
                                     height = 'h-full'
                                 }
-                                console.log(res.event);
+                                // console.log(res.event);
+                                let idx = calendars.findIndex(calendar => calendar._id === res.event.calendar);
+                                let color = calendars[idx]?.color;
+
                                 if (res.event.type === 'event') {
                                     return (
-                                        <Event repeat={res.event.repeat} width={width} height={height} id={res.event.id} name={res.event.name} type={res.event.type} description={res.event.description} date_start={res.event.date_start} date_end={res.event.date_end}/>
+                                        <Event color={color} repeat={res.event.repeat} width={width} height={height} id={res.event.id} name={res.event.name} type={res.event.type} description={res.event.description} date_start={res.event.date_start} date_end={res.event.date_end}/>
                                     )
                                 } else if (res.event.type === 'task') {
                                     return (
-                                        <Event repeat={res.event.repeat} width={width} height={'h-1/2'} id={res.event.id} name={res.event.name} type={res.event.type} description={res.event.description} date_start={res.event.date_start} date_end={res.event.date_end}/>
+                                        <Event color={color} repeat={res.event.repeat} width={width} height={'h-1/2'} id={res.event.id} name={res.event.name} type={res.event.type} description={res.event.description} date_start={res.event.date_start} date_end={res.event.date_end}/>
                                     )
                                 } else {
                                     return (
-                                        <Event repeat={res.event.repeat} width={width} height={'h-1/2'} id={res.event.id} name={res.event.name} type={res.event.type} description={res.event.description} date_start={res.event.date_start} date_end={res.event.date_end}/>
+                                        <Event color={color} repeat={res.event.repeat} width={width} height={'h-1/2'} id={res.event.id} name={res.event.name} type={res.event.type} description={res.event.description} date_start={res.event.date_start} date_end={res.event.date_end}/>
                                     )
                                 }
 
