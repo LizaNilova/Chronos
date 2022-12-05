@@ -7,7 +7,6 @@ export const createMainCalendar = async (user) => {
       const newCalendar = new Calendar({
         name: "Main Calendar",
         members: user.id,
-        icon: "https://cdn-icons-png.flaticon.com/512/4206/4206324.png",
         author: user.id,
         type: "main",
       });
